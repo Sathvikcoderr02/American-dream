@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { PORTALS } from "@/lib/portals";
 import { PortalCard } from "./PortalCard";
 import { usePortal } from "./HubProvider";
+import { AIGuide } from "./AIGuide";
 
 export function HubScene() {
   const [showCinematic, setShowCinematic] = useState(true);
@@ -166,13 +167,16 @@ export function HubScene() {
         </div>
       </section>
 
-      {/* Footer hint — Day 2 will replace with AI guide button */}
-      <footer className="relative z-10 px-6 pb-10 md:px-12 md:pb-14">
+      {/* Footer hint */}
+      <footer className="relative z-10 px-6 pb-28 md:px-12 md:pb-32">
         <div className="flex flex-col items-start justify-between gap-4 border-t border-bone/10 pt-6 text-[11px] uppercase tracking-[0.22em] text-bone-dim md:flex-row md:items-center">
           <span>Tip — every portal is a self-contained world. Return to the hub anytime.</span>
-          <span className="opacity-60">Concierge launching soon ↗</span>
+          <span className="opacity-60">AI concierge bottom-right →</span>
         </div>
       </footer>
+
+      {/* AI Concierge */}
+      <AIGuide />
 
       {/* Coming Next placeholder modal */}
       <AnimatePresence>
