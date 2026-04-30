@@ -1,23 +1,27 @@
-import { Hero } from "./sections/Hero";
-import { WhyThisProperty } from "./sections/WhyThisProperty";
-import { Retail } from "./sections/Retail";
-import { Luxury } from "./sections/Luxury";
-import { Dining } from "./sections/Dining";
-import { Attractions } from "./sections/Attractions";
-import { Events } from "./sections/Events";
-import { CTA } from "./sections/CTA";
+"use client";
 
-export default function HomePage() {
+import { AnimatePresence } from "framer-motion";
+import { HubProvider, usePortal } from "./hub/HubProvider";
+import { HubScene } from "./hub/HubScene";
+import { PropertyModule } from "./modules/PropertyModule";
+
+function HubShell() {
+  const { activePortal } = usePortal();
+
   return (
-    <main className="relative">
-      <Hero />
-      <WhyThisProperty />
-      <Retail />
-      <Luxury />
-      <Dining />
-      <Attractions />
-      <Events />
-      <CTA />
+    <main className="relative min-h-screen overflow-hidden">
+      <AnimatePresence mode="popLayout" initial={false}>
+        {activePortal === null && <HubScene key="hub" />}
+        {activePortal === "property" && <PropertyModule key="property" />}
+      </AnimatePresence>
     </main>
+  );
+}
+
+export default function Page() {
+  return (
+    <HubProvider>
+      <HubShell />
+    </HubProvider>
   );
 }

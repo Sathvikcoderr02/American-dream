@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
-import { SmoothScroll } from "@/components/SmoothScroll";
 import { Cursor } from "@/components/Cursor";
-import { Navigator } from "@/components/Navigator";
 
 const displayFont = Instrument_Serif({
   subsets: ["latin"],
@@ -48,11 +46,8 @@ export default function RootLayout({
       className={`${displayFont.variable} ${sansFont.variable} has-custom-cursor`}
     >
       <body className="relative min-h-screen bg-ink text-bone">
-        <SmoothScroll>
-          <Cursor />
-          <Navigator />
-          {children}
-        </SmoothScroll>
+        <Cursor />
+        {children}
       </body>
     </html>
   );
