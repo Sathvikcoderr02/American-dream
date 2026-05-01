@@ -18,7 +18,13 @@ type RoiPayload = {
   earned: string;
 };
 
-type Payload = GuidePayload | RoiPayload;
+type TenantPitchPayload = {
+  type: "tenant_pitch";
+  brand: string;
+  category: "flagship" | "luxury" | "contemporary" | "popup";
+};
+
+type Payload = GuidePayload | RoiPayload | TenantPitchPayload;
 
 const GUIDE_SYSTEM = `You are the commercial concierge for American Dream — the largest entertainment-first destination in the Americas.
 
@@ -49,6 +55,25 @@ After the recommendation, on a new line, output ONLY a JSON object with the port
 ROUTE: {"portal":"<id>"}
 
 Where <id> is one of: property, attractions, sponsor, tenant, events.`;
+
+const TENANT_PITCH_SYSTEM = `You are a commercial leasing director at American Dream — the largest entertainment-first destination in the Americas. Write a personalized flagship pitch for the brand named in the user's request.
+
+PROPERTY ANCHORS YOU CAN REFERENCE:
+- 3M sq ft, 10 min from Manhattan, 22M people within 30 miles
+- 40M annual visitors, 4-hour average dwell time
+- The Avenue (luxury wing): Hermès, Saint Laurent, Dolce & Gabbana, Carolina Herrera adjacencies
+- Flagship Concept tier: Toys R Us reopened, LEGO, Zara, H&M, Primark
+- Contemporary tier: Sephora, Uniqlo, Aritzia, Arc'teryx
+- The Collective: pop-up flex platform, 30-day cycles, foot-traffic guaranteed
+- 7 attractions adjacent (Nickelodeon Universe, DreamWorks Water Park, Big SNOW, Sea Life, LEGOLAND, Mini Golf, Observation Wheel)
+- 28 dining operators, food halls, IT'SUGAR three-floor candy department store
+
+Write 3 sentences describing what THIS brand's American Dream flagship would specifically look like. Reference:
+1. Which tier they'd belong to and why
+2. One specific architectural / spatial / programming detail (not a generic "premium experience")
+3. One specific named adjacency or attraction that would create traffic crossover
+
+Constraints: Exactly 3 sentences. Under 80 words. No bullet points. No emojis. Sound like a leasing director who has placed this brand before — confident, specific, slightly understated.`;
 
 const ROI_SYSTEM = `You are writing a single concise paragraph for a commercial sponsorship deck for American Dream — the largest entertainment-first destination in the Americas.
 
@@ -96,13 +121,22 @@ On-property visits: ${body.onProperty}
 Earned media value: ${body.earned}
 
 Write the 3-sentence partnership description.`;
+  } else if (body.type === "tenant_pitch") {
+    if (!body.brand || typeof body.brand !== "string" || body.brand.length > 80) {
+      return NextResponse.json({ error: "invalid_brand" }, { status: 400 });
+    }
+    systemInstruction = TENANT_PITCH_SYSTEM;
+    userPrompt = `Brand: ${body.brand.trim()}
+Selected tier preference: ${body.category}
+
+Write the 3-sentence flagship pitch.`;
   } else {
     return NextResponse.json({ error: "invalid_type" }, { status: 400 });
   }
 
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-flash-latest",
+      model: "gemini-2.5-flash-lite",
       systemInstruction,
     });
 

@@ -66,7 +66,7 @@ export const PORTALS: Portal[] = [
     video: "/videos/hero-reel.mp4",
     accent: "bone",
     size: "square",
-    ready: false,
+    ready: true,
   },
   {
     id: "events",
@@ -79,7 +79,7 @@ export const PORTALS: Portal[] = [
     video: "/videos/big-snow.mp4",
     accent: "plum",
     size: "wide",
-    ready: false,
+    ready: true,
   },
 ];
 

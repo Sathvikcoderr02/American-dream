@@ -6,6 +6,8 @@ import { HubScene } from "./hub/HubScene";
 import { PropertyModule } from "./modules/PropertyModule";
 import { AttractionsModule } from "./modules/AttractionsModule";
 import { SponsorModule } from "./modules/SponsorModule";
+import { TenantModule } from "./modules/TenantModule";
+import { EventsModule } from "./modules/EventsModule";
 
 function HubShell() {
   const { activePortal } = usePortal();
@@ -17,6 +19,8 @@ function HubShell() {
         {activePortal === "property" && <PropertyModule key="property" />}
         {activePortal === "attractions" && <AttractionsModule key="attractions" />}
         {activePortal === "sponsor" && <SponsorModule key="sponsor" />}
+        {activePortal === "tenant" && <TenantModule key="tenant" />}
+        {activePortal === "events" && <EventsModule key="events" />}
       </AnimatePresence>
     </main>
   );

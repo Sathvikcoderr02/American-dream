@@ -10,3 +10,6 @@ out
 audit-out/
 tmp/
 
+# TypeScript incremental build info
+tsconfig.tsbuildinfo
+
