@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { HubNav } from "@/components/HubNav";
 import { DEMOGRAPHICS, PROPERTY_FACTS, HERO_STATS } from "@/lib/data";
 import { ACCENT_TOKEN } from "@/lib/portals";
+import { PropertyFloorPlan } from "./PropertyFloorPlan";
 
 export function PropertyModule() {
   const accent = ACCENT_TOKEN.gold;
@@ -102,6 +103,9 @@ export function PropertyModule() {
             </motion.div>
           </motion.div>
         </section>
+
+        {/* Interactive floor plan — the spatial moment */}
+        <PropertyFloorPlan />
 
         {/* Facts section */}
         <section className="relative w-full bg-ink px-6 py-32 md:px-12 md:py-40">

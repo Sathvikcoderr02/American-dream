@@ -6,6 +6,7 @@ import { PORTALS } from "@/lib/portals";
 import { PortalCard } from "./PortalCard";
 import { usePortal } from "./HubProvider";
 import { AIGuide } from "./AIGuide";
+import { LiveHubSignals } from "./LiveHubSignals";
 
 export function HubScene() {
   const [showCinematic, setShowCinematic] = useState(true);
@@ -141,8 +142,11 @@ export function HubScene() {
         </motion.div>
       </section>
 
+      {/* Live signals */}
+      <LiveHubSignals />
+
       {/* Portal grid — asymmetric */}
-      <section className="relative z-10 mx-auto max-w-[1400px] px-6 py-14 md:px-12 md:py-20">
+      <section className="relative z-10 mx-auto max-w-[1400px] px-6 py-10 md:px-12 md:py-12">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6">
           {/* Row 1: Property (wide, 7 cols) + Attractions (tall, 5 cols) */}
           <div className="md:col-span-7">
