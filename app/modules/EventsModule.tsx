@@ -57,12 +57,12 @@ export function EventsModule() {
         {/* Hero */}
         <section className="relative flex min-h-[80vh] w-full items-end overflow-hidden">
           <video
-            src="/videos/big-snow.mp4"
+            src="/videos/events-hero.mp4"
             autoPlay
             muted
             loop
             playsInline
-            className="absolute inset-0 h-full w-full object-cover opacity-50"
+            className="absolute inset-0 h-full w-full object-cover opacity-70"
             poster="/images/court-concert.jpg"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 to-ink/30" />

@@ -20,7 +20,7 @@ const ACTIVATION_VISUALS: Array<
 > = [
   { type: "image", src: "/images/luxury-wing.jpg" },     // 0 — Brand Takeover (wing wrap)
   { type: "image", src: "/images/court-concert.jpg" },   // 1 — Product Launch (The Court)
-  { type: "video", src: "/videos/dreamworks.mp4" },      // 2 — Immersive Zone (themed build)
+  { type: "video", src: "/videos/sponsor-immersive.mp4" }, // 2 — Immersive Zone (themed build)
   { type: "image", src: "/images/food-hall.jpg" },       // 3 — Content Studio (always-on set)
   { type: "image", src: "/images/dining-terrace.jpg" },  // 4 — Member Series (intimate)
   { type: "image", src: "/images/observation-wheel.jpg" },// 5 — Ambassador Slate (icon-led)
@@ -82,7 +82,7 @@ export function SponsorModule() {
         {/* Hero — video backed */}
         <section className="relative flex min-h-screen w-full items-end overflow-hidden">
           <video
-            src="/videos/hero-reel.mp4"
+            src="/videos/sponsor-hero.mp4"
             autoPlay
             muted
             loop

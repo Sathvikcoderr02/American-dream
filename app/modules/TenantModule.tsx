@@ -74,7 +74,7 @@ export function TenantModule() {
         {/* Hero — video bg + tab strip */}
         <section className="relative flex min-h-[80vh] w-full items-end overflow-hidden">
           <video
-            src="/videos/hero-reel.mp4"
+            src="/videos/tenant-hero.mp4"
             autoPlay
             muted
             loop

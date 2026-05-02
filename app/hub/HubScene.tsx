@@ -37,7 +37,7 @@ export function HubScene() {
       {/* Ambient hero video — soft, subtle */}
       <div className="pointer-events-none absolute inset-0 -z-20">
         <video
-          src="/videos/hero-reel.mp4"
+          src="/videos/hub-ambient.mp4"
           autoPlay
           muted
           loop
