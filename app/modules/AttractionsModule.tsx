@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { HubNav } from "@/components/HubNav";
 import { ATTRACTIONS } from "@/lib/data";
 import { ACCENT_TOKEN } from "@/lib/portals";
+import { CinematicSnow } from "./CinematicSnow";
 
 const ACCENT_HEX: Record<string, string> = {
   ember: "#ff4a2b",
@@ -26,9 +27,12 @@ type WeatherState =
 export function AttractionsModule() {
   const [index, setIndex] = useState(0);
   const [weather, setWeather] = useState<WeatherState>({ status: "loading" });
+  const [cinemaOpen, setCinemaOpen] = useState(false);
   const current = ATTRACTIONS[index];
   const accentHex = ACCENT_HEX[current.accent] ?? "#f6f2ea";
   const scrollRef = useRef<HTMLDivElement>(null);
+  const outdoorTempF =
+    weather.status === "ready" ? weather.tempF : null;
 
   useEffect(() => {
     let cancelled = false;
@@ -160,7 +164,11 @@ export function AttractionsModule() {
                     transition={{ duration: 0.5 }}
                   >
                     {index === BIG_SNOW_INDEX ? (
-                      <BigSnowLivePanel weather={weather} accent={accentHex} />
+                      <BigSnowLivePanel
+                        weather={weather}
+                        accent={accentHex}
+                        onStepInside={() => setCinemaOpen(true)}
+                      />
                     ) : (
                       <FlavorPanel index={index} accent={accentHex} />
                     )}
@@ -236,6 +244,13 @@ export function AttractionsModule() {
           </div>
         </section>
       </div>
+
+      {/* Cinematic Big SNOW takeover — the elevated "I need to be here" moment */}
+      <CinematicSnow
+        open={cinemaOpen}
+        outdoorTempF={outdoorTempF}
+        onClose={() => setCinemaOpen(false)}
+      />
     </motion.div>
   );
 }
@@ -245,9 +260,11 @@ export function AttractionsModule() {
 function BigSnowLivePanel({
   weather,
   accent,
+  onStepInside,
 }: {
   weather: WeatherState;
   accent: string;
+  onStepInside: () => void;
 }) {
   const isSummer = weather.status === "ready" && weather.tempF >= 70;
   const isCold = weather.status === "ready" && weather.tempF <= 35;
@@ -326,6 +343,30 @@ function BigSnowLivePanel({
         180 vertical meters of slope, and a terrain park — operating regardless of
         what the sky is doing in New Jersey.
       </div>
+
+      {/* Cinematic CTA — the "I need to be here" moment */}
+      <button
+        onClick={onStepInside}
+        data-cursor="cta"
+        data-cursor-label="Step in"
+        className="group mt-5 flex w-full items-center justify-between gap-3 rounded-2xl border bg-gradient-to-br from-aqua/10 via-ink-2 to-ink-2 px-5 py-4 text-left transition-all hover:from-aqua/20 hover:to-ink"
+        style={{ borderColor: `${accent}55` }}
+      >
+        <div>
+          <div className="text-[9px] uppercase tracking-[0.28em]" style={{ color: accent }}>
+            Cinematic moment · 16°F
+          </div>
+          <div className="mt-1 font-display text-xl text-bone leading-tight">
+            Step inside the only place this exists.
+          </div>
+        </div>
+        <span
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-all group-hover:translate-x-1"
+          style={{ borderColor: `${accent}80`, color: accent }}
+        >
+          →
+        </span>
+      </button>
     </div>
   );
 }

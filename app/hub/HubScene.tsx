@@ -7,6 +7,8 @@ import { PortalCard } from "./PortalCard";
 import { usePortal } from "./HubProvider";
 import { AIGuide } from "./AIGuide";
 import { LiveHubSignals } from "./LiveHubSignals";
+import { HubGreeting } from "./HubGreeting";
+import { StartTourCTA } from "./GuidedTour";
 
 export function HubScene() {
   const [showCinematic, setShowCinematic] = useState(true);
@@ -131,6 +133,9 @@ export function HubScene() {
           <div className="text-[10px] uppercase tracking-[0.28em] text-bone-dim">
             Hub · Non-linear Sales Experience
           </div>
+
+          <HubGreeting />
+
           <h1 className="mt-4 font-display text-5xl leading-[0.96] text-bone md:text-7xl">
             Pick the door <br />
             that <span className="italic text-gold">matters to you.</span>
@@ -139,6 +144,13 @@ export function HubScene() {
             Three million square feet, seven attractions, four event venues, and 450 brands —
             distilled into five portals. Open the one that fits your role and skip the rest.
           </p>
+
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <StartTourCTA />
+            <span className="text-[10px] uppercase tracking-[0.24em] text-bone-dim">
+              or pick a portal directly →
+            </span>
+          </div>
         </motion.div>
       </section>
 

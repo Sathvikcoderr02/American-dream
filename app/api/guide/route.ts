@@ -24,7 +24,14 @@ type TenantPitchPayload = {
   category: "flagship" | "luxury" | "contemporary" | "popup";
 };
 
-type Payload = GuidePayload | RoiPayload | TenantPitchPayload;
+type GreetingPayload = {
+  type: "greeting";
+  outdoorTempF: number | null;
+  hour: number;
+  visitorCount: number;
+};
+
+type Payload = GuidePayload | RoiPayload | TenantPitchPayload | GreetingPayload;
 
 const GUIDE_SYSTEM = `You are the commercial concierge for American Dream — the largest entertainment-first destination in the Americas.
 
@@ -55,6 +62,16 @@ After the recommendation, on a new line, output ONLY a JSON object with the port
 ROUTE: {"portal":"<id>"}
 
 Where <id> is one of: property, attractions, sponsor, tenant, events.`;
+
+const GREETING_SYSTEM = `You are the doorman of American Dream — the largest entertainment-first destination in the Americas (Meadowlands NJ, 10 min from Manhattan, 3M sq ft, 7 attractions, 450+ brands, 4 event venues).
+
+A prospect just opened the property's interactive deck. You have three real-world data points: the outdoor temperature, the local hour of day, and an estimated current visitor count inside the building.
+
+Write a SINGLE arresting opening line (under 22 words) that uses at least two of those data points to make this moment feel specific and alive — not a tagline, not a slogan, not "Welcome to". Sound like a confident concierge who can see the building right now. Do not use bullet points, exclamation marks, or emojis. End with a period.
+
+Examples of the tone (do not copy, just absorb the voice):
+- "It is 41°F outside. Inside, 28,400 people are mid-afternoon, and the snow is groomed."
+- "10pm on a Friday. The Court is loading in for tomorrow, 12,800 people are still in the building, and the rooftop is just warming up."`;
 
 const TENANT_PITCH_SYSTEM = `You are a commercial leasing director at American Dream — the largest entertainment-first destination in the Americas. Write a personalized flagship pitch for the brand named in the user's request.
 
@@ -121,6 +138,20 @@ On-property visits: ${body.onProperty}
 Earned media value: ${body.earned}
 
 Write the 3-sentence partnership description.`;
+  } else if (body.type === "greeting") {
+    systemInstruction = GREETING_SYSTEM;
+    const tempStr = body.outdoorTempF !== null ? `${body.outdoorTempF}°F outside` : "weather sensor offline";
+    const partOfDay =
+      body.hour < 6 ? "early morning" :
+      body.hour < 12 ? "morning" :
+      body.hour < 17 ? "afternoon" :
+      body.hour < 21 ? "evening" : "late night";
+    userPrompt = `Live data right now:
+- Outside: ${tempStr}
+- Local time: ${body.hour}:00 (${partOfDay})
+- Estimated visitors currently in the building: ${body.visitorCount.toLocaleString()}
+
+Write the single opening line.`;
   } else if (body.type === "tenant_pitch") {
     if (!body.brand || typeof body.brand !== "string" || body.brand.length > 80) {
       return NextResponse.json({ error: "invalid_brand" }, { status: 400 });

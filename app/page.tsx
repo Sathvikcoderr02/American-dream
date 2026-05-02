@@ -3,6 +3,7 @@
 import { AnimatePresence } from "framer-motion";
 import { HubProvider, usePortal } from "./hub/HubProvider";
 import { HubScene } from "./hub/HubScene";
+import { GuidedTour } from "./hub/GuidedTour";
 import { PropertyModule } from "./modules/PropertyModule";
 import { AttractionsModule } from "./modules/AttractionsModule";
 import { SponsorModule } from "./modules/SponsorModule";
@@ -22,6 +23,7 @@ function HubShell() {
         {activePortal === "tenant" && <TenantModule key="tenant" />}
         {activePortal === "events" && <EventsModule key="events" />}
       </AnimatePresence>
+      <GuidedTour />
     </main>
   );
 }
