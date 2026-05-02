@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { HubNav } from "@/components/HubNav";
 import { DEMOGRAPHICS, PROPERTY_FACTS, HERO_STATS } from "@/lib/data";
 import { ACCENT_TOKEN } from "@/lib/portals";
 import { PropertyFloorPlan } from "./PropertyFloorPlan";
@@ -23,8 +22,6 @@ export function PropertyModule() {
       className="fixed inset-0 z-30 overflow-hidden bg-ink"
       transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }}
     >
-      <HubNav label="The Property" accent={accent} />
-
       {/* Scroll container */}
       <div
         ref={scrollRef}
@@ -66,8 +63,9 @@ export function PropertyModule() {
               </span>
             </h1>
             <p className="mt-6 max-w-2xl text-[14px] leading-relaxed text-bone-dim md:text-[16px]">
-              Ten minutes from Manhattan. At the convergence of three interstates and 22 million people.
-              The largest entertainment-first destination in the Americas — and a single integrated media surface.
+              Ten minutes from Manhattan. Twenty-two million consumers commute past your storefront
+              every quarter. Open seven days a week, four hours of dwell, year-round climate. This
+              is not a mall — it's a media surface with foot traffic.
             </p>
 
             {/* Stat strip */}

@@ -140,6 +140,11 @@
   to { transform: translateX(-50%); }
 }
 
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -147,6 +152,7 @@
 
 .animate-aurora { animation: aurora-drift 22s var(--ease-in-out-expo) infinite; }
 .animate-marquee { animation: marquee 40s linear infinite; }
+.animate-marquee-reverse { animation: marquee-reverse 40s linear infinite; }
 .animate-shimmer {
   background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-bone) 60%, transparent), transparent);
   background-size: 200% 100%;

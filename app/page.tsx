@@ -9,12 +9,14 @@ import { AttractionsModule } from "./modules/AttractionsModule";
 import { SponsorModule } from "./modules/SponsorModule";
 import { TenantModule } from "./modules/TenantModule";
 import { EventsModule } from "./modules/EventsModule";
+import { GlobalHeader } from "@/components/GlobalHeader";
 
 function HubShell() {
   const { activePortal } = usePortal();
 
   return (
     <main className="relative min-h-screen overflow-hidden">
+      <GlobalHeader />
       <AnimatePresence mode="popLayout" initial={false}>
         {activePortal === null && <HubScene key="hub" />}
         {activePortal === "property" && <PropertyModule key="property" />}

@@ -2,11 +2,11 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useMemo, useRef, useState } from "react";
-import { HubNav } from "@/components/HubNav";
 import { VENUES, EVENT_HIGHLIGHTS } from "@/lib/data";
 import { BookingTimeline } from "@/app/events/BookingTimeline";
 import { VenueStage } from "@/app/events/VenueStage";
 import { ACCENT_TOKEN } from "@/lib/portals";
+import { CountUp } from "@/components/CountUp";
 
 const EVENT_TYPES = [
   "Concert",
@@ -51,8 +51,6 @@ export function EventsModule() {
       className="fixed inset-0 z-30 overflow-hidden bg-ink"
       transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }}
     >
-      <HubNav label="Events" accent={ACCENT_TOKEN.plum} />
-
       <div ref={scrollRef} className="h-full w-full overflow-y-auto overflow-x-hidden">
         {/* Hero */}
         <section className="relative flex min-h-[80vh] w-full items-end overflow-hidden">
@@ -90,8 +88,9 @@ export function EventsModule() {
               </span>
             </h1>
             <p className="mt-6 max-w-2xl text-[14px] leading-relaxed text-bone-dim md:text-[16px]">
-              Four purpose-built venues, one concierge. Select a space, drag the timeline to hold
-              your dates, and we'll confirm within 24 hours with a production-grade proposal.
+              Sell out a 12,000-seat arena on Wednesday. Open a Broadway run on Thursday. Ship a
+              brand activation on Friday. Four venues, one freight elevator, one concierge —
+              a hold confirmed in 24 hours with a production-grade proposal.
             </p>
 
             {/* Venue quick stats */}
@@ -443,7 +442,11 @@ function BookingPace({
           <span>FY26 booking pace</span>
         </div>
         <div className="mt-4 flex items-baseline gap-2">
-          <span className="font-display text-5xl text-bone">{bookedPct}%</span>
+          <CountUp
+            to={bookedPct}
+            suffix="%"
+            className="font-display text-5xl text-bone"
+          />
           <span className="text-[12px] uppercase tracking-[0.22em] text-bone-dim">
             booked
           </span>

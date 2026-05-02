@@ -3,9 +3,7 @@
 import Image from "next/image";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { HubNav } from "@/components/HubNav";
 import { ATTRACTIONS } from "@/lib/data";
-import { ACCENT_TOKEN } from "@/lib/portals";
 import { CinematicSnow } from "./CinematicSnow";
 
 const ACCENT_HEX: Record<string, string> = {
@@ -61,8 +59,6 @@ export function AttractionsModule() {
       className="fixed inset-0 z-30 overflow-hidden bg-ink"
       transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }}
     >
-      <HubNav label="Attractions" accent={ACCENT_TOKEN.aqua} />
-
       <div ref={scrollRef} className="h-full w-full overflow-y-auto overflow-x-hidden">
         {/* Stage — full viewport */}
         <section className="relative h-screen w-full overflow-hidden">
@@ -140,6 +136,10 @@ export function AttractionsModule() {
                     <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-bone-dim md:text-[16px]">
                       {current.body}
                     </p>
+                    <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-bone/15 bg-ink-2/40 px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-bone-dim backdrop-blur">
+                      <span className="block h-1 w-1 rounded-full bg-aqua" />
+                      Operating now · all 7 worlds open daily
+                    </div>
                     <div className="mt-7 flex items-baseline gap-3">
                       <span
                         className="font-display text-5xl leading-none md:text-6xl"

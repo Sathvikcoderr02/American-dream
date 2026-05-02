@@ -9,6 +9,8 @@ import { AIGuide } from "./AIGuide";
 import { LiveHubSignals } from "./LiveHubSignals";
 import { HubGreeting } from "./HubGreeting";
 import { StartTourCTA } from "./GuidedTour";
+import { CredibilityStrip } from "./CredibilityStrip";
+import { CinematicTeaser } from "./CinematicTeaser";
 
 export function HubScene() {
   const [showCinematic, setShowCinematic] = useState(true);
@@ -95,40 +97,40 @@ export function HubScene() {
         )}
       </AnimatePresence>
 
-      {/* Top bar */}
-      <header className="relative z-20 flex items-center justify-between px-6 py-6 md:px-12 md:py-8">
-        <div className="flex items-center gap-3">
-          <div className="relative h-9 w-9">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gold to-ember" />
-            <div className="absolute inset-[3px] rounded-full bg-ink" />
-            <div className="absolute inset-0 flex items-center justify-center font-display text-base text-bone">
-              Æ
-            </div>
-          </div>
-          <div className="hidden flex-col leading-none md:flex">
-            <span className="font-display text-[16px] tracking-wide">American Dream</span>
-            <span className="text-[9px] uppercase tracking-[0.24em] text-bone-dim">
-              Destination Platform
-            </span>
-          </div>
+      {/* Hero copy — with dedicated cinematic video bg */}
+      <section className="relative z-10 overflow-hidden px-6 pt-24 md:px-12 md:pt-28">
+        {/* Hero background video — sits behind the headline */}
+        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+          <video
+            src="/videos/project.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 h-full w-full object-cover opacity-55"
+          />
+          {/* Top fade — blends into header */}
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ink via-ink/70 to-transparent" />
+          {/* Bottom fade — blends into live signals strip */}
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-ink via-ink/80 to-transparent" />
+          {/* Right-side fade — keeps copy readable on light frames */}
+          <div className="absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-ink/85 via-ink/40 to-transparent" />
+          {/* Warm aurora wash */}
+          <div
+            className="absolute inset-0 opacity-50"
+            style={{
+              background:
+                "radial-gradient(60% 80% at 20% 60%, rgba(212,178,120,0.18), transparent 70%)",
+            }}
+          />
+          <div className="bg-grain absolute inset-0 opacity-30" />
         </div>
 
-        <div className="hidden items-center gap-3 rounded-full border border-bone/10 bg-ink-2/50 px-4 py-1.5 text-[10px] uppercase tracking-[0.24em] text-bone-dim backdrop-blur md:flex">
-          <span className="relative block h-1.5 w-1.5">
-            <span className="absolute inset-0 rounded-full bg-ember" />
-            <span className="absolute inset-0 animate-ping rounded-full bg-ember/60" />
-          </span>
-          5 Portals · Choose Your Path
-        </div>
-      </header>
-
-      {/* Hero copy */}
-      <section className="relative z-10 px-6 pt-6 md:px-12 md:pt-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="max-w-3xl"
+          className="relative max-w-3xl py-12 md:py-20"
         >
           <div className="text-[10px] uppercase tracking-[0.28em] text-bone-dim">
             Hub · Non-linear Sales Experience
@@ -141,8 +143,8 @@ export function HubScene() {
             that <span className="italic text-gold">matters to you.</span>
           </h1>
           <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-bone-dim md:text-[15px]">
-            Three million square feet, seven attractions, four event venues, and 450 brands —
-            distilled into five portals. Open the one that fits your role and skip the rest.
+            Five portals. Pick the one that fits your role — tenant, sponsor, planner — and skip
+            the rest. Every interaction here is calibrated to one outcome: you signing.
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -156,6 +158,12 @@ export function HubScene() {
 
       {/* Live signals */}
       <LiveHubSignals />
+
+      {/* Cinematic teaser — surfaces the strongest moment from the hub */}
+      <CinematicTeaser />
+
+      {/* Credibility strip — quotes + marquee proof */}
+      <CredibilityStrip />
 
       {/* Portal grid — asymmetric */}
       <section className="relative z-10 mx-auto max-w-[1400px] px-6 py-10 md:px-12 md:py-12">

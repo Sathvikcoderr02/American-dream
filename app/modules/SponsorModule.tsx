@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { HubNav } from "@/components/HubNav";
 import { SpendSlider } from "@/app/sponsorship/SpendSlider";
 import {
   SPONSOR_AUDIENCE_BARS,
@@ -76,8 +75,6 @@ export function SponsorModule() {
       className="fixed inset-0 z-30 overflow-hidden bg-ink"
       transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }}
     >
-      <HubNav label="Sponsor" accent={ACCENT_TOKEN.ember} />
-
       <div ref={scrollRef} className="h-full w-full overflow-y-auto overflow-x-hidden">
         {/* Hero — video backed */}
         <section className="relative flex min-h-screen w-full items-end overflow-hidden">
@@ -116,9 +113,9 @@ export function SponsorModule() {
               <span className="italic text-gold">audience.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-bone-dim md:text-[16px]">
-              American Dream is a media platform with a building attached. 40 million annual visitors.
-              A 4-hour captive dwell. Six purpose-built activation surfaces. Drag the slider and see what
-              your budget actually looks like — numbers and language adapt in real time.
+              $1.6M earned media on a $750K spend, before retail lift. Drag the slider — the AI
+              rewrites the partnership story to match the exact number you choose. Numbers and
+              language adapt in real time, so you never see a generic deck again.
             </p>
 
             {/* Quick-stat strip */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { ACCENT_TOKEN, type Portal } from "@/lib/portals";
 import { usePortal } from "./HubProvider";
@@ -15,6 +15,17 @@ export function PortalCard({ portal, className = "", delay = 0 }: Props) {
   const { openPortal, showPlaceholder } = usePortal();
   const [hovered, setHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const cardRef = useRef<HTMLButtonElement>(null);
+
+  // Cursor-driven 3D tilt — applied to inner content only, not the layoutId element
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 80, damping: 18 });
+  const sy = useSpring(my, { stiffness: 80, damping: 18 });
+  const rotateY = useTransform(sx, [-1, 1], [-6, 6]);
+  const rotateX = useTransform(sy, [-1, 1], [4, -4]);
+  const shineX = useTransform(sx, [-1, 1], ["20%", "80%"]);
+  const shineY = useTransform(sy, [-1, 1], ["20%", "80%"]);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -28,6 +39,21 @@ export function PortalCard({ portal, className = "", delay = 0 }: Props) {
     }
   }, [hovered]);
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const r = cardRef.current?.getBoundingClientRect();
+    if (!r) return;
+    const x = ((e.clientX - r.left) / r.width) * 2 - 1;
+    const y = ((e.clientY - r.top) / r.height) * 2 - 1;
+    mx.set(x);
+    my.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+    mx.set(0);
+    my.set(0);
+  };
+
   const accentVar = ACCENT_TOKEN[portal.accent];
 
   const handleClick = () => {
@@ -37,10 +63,12 @@ export function PortalCard({ portal, className = "", delay = 0 }: Props) {
 
   return (
     <motion.button
+      ref={cardRef}
       layoutId={`portal-${portal.id}`}
       onClick={handleClick}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
       data-cursor="cta"
@@ -49,8 +77,22 @@ export function PortalCard({ portal, className = "", delay = 0 }: Props) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
       className={`group relative isolate flex w-full overflow-hidden rounded-[28px] border border-bone/10 bg-ink-2 text-left transition-colors hover:border-bone/30 ${className}`}
-      style={{ ["--accent" as string]: accentVar }}
+      style={{
+        ["--accent" as string]: accentVar,
+        rotateX,
+        rotateY,
+        transformPerspective: 900,
+        transformStyle: "preserve-3d",
+      }}
     >
+      {/* Cursor-following light shine */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: `radial-gradient(40% 50% at ${shineX} ${shineY}, rgba(255,255,255,0.12), transparent 70%)`,
+        }}
+      />
       {/* Video / poster */}
       <div className="absolute inset-0 -z-10">
         <video

@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
-import { HubNav } from "@/components/HubNav";
 import {
   RETAIL_CATEGORIES,
   LUXURY_BRANDS,
@@ -68,8 +67,6 @@ export function TenantModule() {
       className="fixed inset-0 z-30 overflow-hidden bg-ink"
       transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }}
     >
-      <HubNav label="Tenant" accent={activeTab.accent} />
-
       <div ref={scrollRef} className="h-full w-full overflow-y-auto overflow-x-hidden">
         {/* Hero — video bg + tab strip */}
         <section className="relative flex min-h-[80vh] w-full items-end overflow-hidden">
@@ -129,11 +126,11 @@ export function TenantModule() {
                 </h1>
                 <p className="mt-6 max-w-2xl text-[14px] leading-relaxed text-bone-dim md:text-[16px]">
                   {tab === "retail" &&
-                    "Four operating tiers, one merchandising surface. We do not lease square footage — we cast a portfolio. Each adjacency is intentional, each flagship a brand stage."}
+                    "You won't be the only flagship here — that's the point. Sit your store next to Hermès, opposite Sephora, two doors from Toys R Us. We don't lease square footage; we cast a portfolio."}
                   {tab === "avenue" &&
-                    "A curated, invitation-only adjacency of 50 luxury houses. Engineered as a single experience with private suites, valet, and clienteling — the only luxury district in North America operating inside a year-round entertainment destination."}
+                    "Fifty luxury houses, one invitation-only address. Private salons, dedicated arrival, valet that knows your car. The only luxury district in North America running inside a year-round entertainment destination — your client comes for the wheel, leaves with the bag."}
                   {tab === "dining" &&
-                    "Twenty-eight operators. Food halls, fine dining, a three-story confectionary department store. American Dream doesn't treat F&B as a break from shopping — it treats it as the reason to stay four hours."}
+                    "Twenty-eight operators. The reason a four-hour visit becomes a six-hour visit. Brunch on the terrace, an indulgence pass through IT'SUGAR, dinner at Toast — all under one roof, all booked from one app."}
                 </p>
               </motion.div>
             </AnimatePresence>
